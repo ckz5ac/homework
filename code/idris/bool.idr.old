@@ -1,0 +1,70 @@
+-- total functions
+-- block comments
+-- symbolic arguments
+-- pattern matching: any argument
+-- There are 4 possible ways to fill in teh result column for a truth
+-- table for a unary or a binary function and there are thus exactly 4
+-- such functions and no more.
+module bool
+
+import pair
+
+data bool = true | false
+
+id: bool -> bool
+id true = true
+id false = false
+
+constFalse: bool -> bool
+constFalse _ = false
+
+constTrue: bool -> bool
+constTrue _ = true
+
+not: bool -> bool
+not true = false
+not _ = true
+
+andp: pair bool bool -> bool
+andp (mkPair true true) = true
+andp (mkPair a b) = false
+
+orp: pair bool bool -> bool
+orp (mkPair false false) = false
+orp (mkPair a b) = true
+
+nandp: pair bool bool -> bool
+nandp (mkPair true true) = false
+nandp (mkPair a b) = true
+
+xorp: pair bool bool -> bool
+xorp (mkPair true b) = true
+xorp (mkPair a true) = true
+xorp (mkPair a b) = false
+
+pand: bool -> bool -> bool
+pand true x = id x
+pand false x = constFalse x
+
+por: bool -> bool -> bool
+por false x = id x
+por true x = constTrue x
+
+pxor: bool -> bool -> bool
+pxor true x = not x
+pxor false x = id x
+
+pnand: bool -> bool -> bool
+pnand true x = not x
+pnand false x = constTrue x
+
+and: bool -> bool -> bool
+and true true = true
+and _ _ = false
+
+uf: bool -> bool
+uf = (and true)
+
+or: bool -> bool -> bool
+or false false = false
+or _ _ = true
